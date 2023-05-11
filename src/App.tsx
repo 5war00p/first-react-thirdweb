@@ -1,48 +1,86 @@
-import { ConnectWallet } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebNftMedia, Web3Button, useContract, useMintNFT, useNFTs, useConnectionStatus, useAddress  } from "@thirdweb-dev/react";
+import { faker } from '@faker-js/faker';
 import "./styles/Home.css";
 
+const contractAddress = '0x3a40312a1c376aecf855ef784371d1fb1aa2d25d'
+
 export default function Home() {
+
+  const { contract } = useContract(contractAddress)
+  const { data: nfts, isFetching, isLoading, isError } = useNFTs(contract)
+  const { mutateAsync: mintNFT } = useMintNFT(contract)
+  const walletConnectStatus = useConnectionStatus()
+  const walletAddress = useAddress()
+
   return (
     <div className="container">
       <main className="main">
         <h1 className="title">
-          Welcome to <a href="https://thirdweb.com/">thirdweb</a>!
+          Welcome to <a href="https://portal.thirdweb.com/react">first-react-thirdweb</a>!
         </h1>
 
         <p className="description">
-          Get started by configuring your desired network in{" "}
-          <code className="code">src/index.tsx</code>, then modify the{" "}
-          <code className="code">src/App.tsx</code> file!
+          This a test app which mints an NFT collection called Introducing World App{" "}
+          from <a href='https://mint.fun/'>mint.fun</a>
         </p>
 
         <div className="connect">
           <ConnectWallet dropdownPosition={{ side: 'bottom', align: 'center' }} />
         </div>
 
-        <div className="grid">
-          <a href="https://portal.thirdweb.com/" className="card">
-            <h2>Portal &rarr;</h2>
-            <p>
-              Guides, references and resources that will help you build with
-              thirdweb.
-            </p>
-          </a>
 
-          <a href="https://thirdweb.com/dashboard" className="card">
-            <h2>Dashboard &rarr;</h2>
-            <p>
-              Deploy, configure and manage your smart contracts from the
-              dashboard.
-            </p>
-          </a>
+        {
+          walletAddress && walletConnectStatus === 'connected' ? (
+            <Web3Button
+              contractAddress={contractAddress}
+              action={() => {
+                mintNFT({
+                  metadata: {
+                    name: faker.random.word(),
+                    description: faker.random.words(),
+                    image: faker.image.avatar()
+                  },
+                  to: walletAddress
+                })
+              }}
+            >
+              Claim Mint
+            </Web3Button>
+          ) : null
+        }
 
-          <a href="https://portal.thirdweb.com/templates" className="card">
-            <h2>Templates &rarr;</h2>
-            <p>
-              Discover and clone template projects showcasing thirdweb features.
-            </p>
-          </a>
-        </div>
+        {
+          isLoading && isFetching ? (
+            <div className="card">
+              <p className="description">
+                Loading...
+              </p>
+            </div>
+          ) : isError ? (
+            <div className="card">
+              <p className="code">
+                Error occurred
+              </p>
+            </div>
+          ) : (
+            <div className="grid">
+              {
+                nfts?.map(nft => {
+                  return (
+                    <div>
+                      <p>{nft.metadata.name}</p>
+                      <ThirdwebNftMedia 
+                        key={nft.metadata.id}
+                        metadata={nft.metadata}
+                        height="200px"
+                      />
+                    </div>
+                  )
+                })
+              }
+            </div>
+          )
+        }
       </main>
     </div>
   );
