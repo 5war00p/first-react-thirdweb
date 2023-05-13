@@ -1,4 +1,4 @@
-import { ConnectWallet, ThirdwebNftMedia, Web3Button, useContract, useMintNFT, useNFTs, useConnectionStatus, useAddress  } from "@thirdweb-dev/react";
+import { ConnectWallet, ThirdwebNftMedia, Web3Button, useContract, useMintNFT, useNFTs, useConnectionStatus, useAddress } from "@thirdweb-dev/react";
 import { faker } from '@faker-js/faker';
 import "./styles/Home.css";
 
