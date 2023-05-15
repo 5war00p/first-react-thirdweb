@@ -5,7 +5,7 @@ import { TOKEN_ADDRESSES } from "./constants/erc20TokenAddresses";
 
 export default function Home() {
 
-  const { data, isLoading, isError } = useBatchBalance(TOKEN_ADDRESSES)
+  useBatchBalance(TOKEN_ADDRESSES.slice(0,5))
 
   return (
     <div className="container">
@@ -23,7 +23,7 @@ export default function Home() {
           <ConnectWallet dropdownPosition={{ side: 'bottom', align: 'center' }} />
         </div>
 
-        {
+        {/* {
           isLoading ? (
             <div className="card">
               <p className="description">
@@ -50,7 +50,7 @@ export default function Home() {
               }
             </div>
           )
-        }
+        } */}
       </main>
     </div>
   );
