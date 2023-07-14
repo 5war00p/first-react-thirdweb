@@ -1,9 +1,19 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App2";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ThirdwebProvider } from "@thirdweb-dev/react";
+import {
+  ThirdwebProvider,
+  metamaskWallet,
+  safeWallet,
+  walletConnect,
+  coinbaseWallet,
+} from "@thirdweb-dev/react";
 import "./styles/globals.css";
+import { getTONChain } from "./ton/getChain";
+import { Ethereum, Polygon } from "@thirdweb-dev/chains";
+import tonKeeperWallet from "./ton/getWallet";
+import { TonApp } from "./TonApp";
 
 // This is the chain your dApp will work on.
 // Change this to the chain your app is built for.
@@ -12,13 +22,27 @@ const activeChain = "ethereum";
 
 const container = document.getElementById("root");
 const root = createRoot(container!);
-root.render(
-  <React.StrictMode>
-    <ThirdwebProvider activeChain={activeChain}>
-      <App />
-    </ThirdwebProvider>
-  </React.StrictMode>
-);
+const WALLET_CONNECT_CLOUD_PROJECT_ID = "cdfcb005f3195fab742c44c40e7ea6bc";
+getTONChain().then((TONChain) => {
+  root.render(
+    <React.StrictMode>
+      <ThirdwebProvider
+        activeChain={activeChain}
+        supportedWallets={[
+          metamaskWallet(),
+          safeWallet(),
+          coinbaseWallet(),
+          tonKeeperWallet(),
+          walletConnect({ projectId: WALLET_CONNECT_CLOUD_PROJECT_ID }),
+        ]}
+        supportedChains={[Ethereum, Polygon, TONChain]}
+      >
+        {/* <App /> */}
+        <TonApp />
+      </ThirdwebProvider>
+    </React.StrictMode>
+  );
+});
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
