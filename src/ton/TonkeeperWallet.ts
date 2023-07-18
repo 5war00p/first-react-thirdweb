@@ -1,19 +1,18 @@
-import {
-  AbstractClientWallet,
-  Connector,
-  WagmiAdapter,
-} from "@thirdweb-dev/wallets";
 import { WalletInfoRemote } from "@tonconnect/sdk";
 import {
   TonKeeperWalletConnector,
   connector,
   getWalletList,
 } from "./connector";
+import {
+  AbstractClientWallet,
+  Connector,
+  WagmiAdapter,
+} from "@thirdweb-dev/wallets";
 
 // ? Reference: https://github.com/thirdweb-dev/js/blob/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/wallets/src/evm/wallets/coinbase-wallet.ts
 
-export class TonKeeperWallet extends AbstractClientWallet<{}> {
-  #private: any;
+export class TonKeeperWallet extends AbstractClientWallet {
   connector?: Connector;
   tonConnector?: TonKeeperWalletConnector;
 

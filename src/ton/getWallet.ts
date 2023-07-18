@@ -1,8 +1,9 @@
-import type { WalletOptions, ConfiguredWallet } from "@thirdweb-dev/react-core";
+import type { WalletOptions, WalletConfig } from "@thirdweb-dev/react-core";
 import { TonKeeperConnectUI } from "./TonKeeperConnectUI";
 import { TonKeeperWallet } from "./TonkeeperWallet";
+import { ConnectUIProps } from "@thirdweb-dev/react";
 
-const tonKeeperWallet = (): ConfiguredWallet<TonKeeperWallet> => {
+const tonKeeperWallet = (): WalletConfig<TonKeeperWallet> => {
   return {
     id: "tonkeeper",
     meta: {
@@ -21,7 +22,8 @@ const tonKeeperWallet = (): ConfiguredWallet<TonKeeperWallet> => {
     create: (options: WalletOptions): TonKeeperWallet => {
       return new TonKeeperWallet();
     },
-    connectUI: TonKeeperConnectUI,
+    connectUI: (props: ConnectUIProps<TonKeeperWallet>) =>
+      TonKeeperConnectUI(props),
     isInstalled: () => false,
   };
 };

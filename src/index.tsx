@@ -13,7 +13,7 @@ import "./styles/globals.css";
 import { getTONChain } from "./ton/getChain";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 import tonKeeperWallet from "./ton/getWallet";
-import { TonApp } from "./TonApp";
+// import { TonApp } from "./TonApp";
 
 // This is the chain your dApp will work on.
 // Change this to the chain your app is built for.
@@ -37,8 +37,8 @@ getTONChain().then((TONChain) => {
         ]}
         supportedChains={[Ethereum, Polygon, TONChain]}
       >
-        {/* <App /> */}
-        <TonApp />
+        <App />
+        {/* <TonApp /> */}
       </ThirdwebProvider>
     </React.StrictMode>
   );
