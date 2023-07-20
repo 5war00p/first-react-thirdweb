@@ -1,10 +1,30 @@
 import type { ConnectUIProps } from "@thirdweb-dev/react-core";
 import { TonKeeperWallet } from "./TonkeeperWallet";
+import { Navbar } from "@nextui-org/react";
+import { UniversalQrModal } from "./UI/UniversalQRModel";
+import { getWalletList } from "./connector";
+import { useEffect, useState } from "react";
+import { WalletInfo } from "@tonconnect/sdk";
 
 export const TonKeeperConnectUI = (props: ConnectUIProps<TonKeeperWallet>) => {
+  const [walletList, setWalletList] = useState<WalletInfo[]>([]);
+  useEffect(() => {
+    getWalletList()
+      .then((data) => {
+        const { walletList } = data;
+        setWalletList(walletList);
+      })
+      .catch(console.log);
+  }, []);
+
   return (
-    <div style={{ height: "200px", width: "300px", padding: "4rem" }}>
-      Connect to TonKeeper Wallet
+    <div data-tc-wallets-modal-desktop="true">
+      <Navbar isCompact={true}>
+        <Navbar.Content>QR Code</Navbar.Content>
+        <Navbar.Content>Wallets</Navbar.Content>
+      </Navbar>
+
+      <UniversalQrModal walletsList={walletList} />
     </div>
   );
 };
