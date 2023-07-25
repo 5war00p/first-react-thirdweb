@@ -1,13 +1,13 @@
 import QRCode from "react-qr-code";
 import React, { useCallback, useEffect, useState } from "react";
-import { connector, getWalletList } from "./ton/connector";
+import { connector, getWalletList } from "./ton/onlyTonKeeper/connector";
 import { addReturnStrategy, isDesktop, isMobile, openLink } from "./utils";
 import {
   WalletInfo,
   WalletInfoInjected,
   WalletInfoRemote,
 } from "@tonconnect/sdk";
-import { useTonWalletConnectionError } from "./ton/useTonWalletConnectionError";
+import { useTonWalletConnectionError } from "./ton/onlyTonKeeper/useTonWalletConnectionError";
 
 /* import { TonConnectUIProvider, TonConnectButton } from "@tonconnect/ui-react";
 export const TonApp = () => {

@@ -1,5 +1,5 @@
-import { TonConnectConnector } from "./ton-wallet-connect/index";
-import { QRModalOptions } from "./ton-wallet-connect/qrModalOptions";
+import { TonConnectConnector } from "./connector/index";
+import { QRModalOptions } from "./connector/qrModalOptions";
 import {
   AbstractClientWallet,
   WalletOptions,

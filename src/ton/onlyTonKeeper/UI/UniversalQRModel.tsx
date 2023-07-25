@@ -5,7 +5,7 @@ import {
   WalletInfo,
   WalletInfoCurrentlyInjected,
 } from "@tonconnect/sdk";
-import { addReturnStrategy, openLink } from "../../utils";
+import { addReturnStrategy, openLink } from "../../../utils";
 import {
   Button,
   Text,
@@ -20,6 +20,13 @@ import { connector } from "../connector";
 interface UniversalQrModalProps {
   walletsList: WalletInfo[];
 }
+
+/**
+ *
+ * ? References:
+ * ? https://github.com/ton-connect/sdk/blob/adf2f8fa23542c4ec09cfbcc29d9c252bd3c0dd8/packages/ui/src/app/views/modals/wallets-modal/wallets-modal.tsx
+ * ? https://github.com/ton-connect/sdk/blob/adf2f8fa23542c4ec09cfbcc29d9c252bd3c0dd8/packages/ui/src/app/views/modals/wallets-modal/universal-qr-modal/index.tsx
+ */
 
 export const UniversalQrModal: FC<UniversalQrModalProps> = (props) => {
   const [popupOpened, setPopupOpened] = useState(false);

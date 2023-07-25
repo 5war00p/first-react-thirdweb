@@ -4,7 +4,7 @@ import {
   isWalletInfoInjected,
   isWalletInfoRemote,
 } from "@tonconnect/sdk";
-import { getTONChain } from "./getChain";
+import { getTONChain } from "../getChain";
 import { WagmiConnector } from "@thirdweb-dev/wallets";
 import { WagmiConnectorData } from "@thirdweb-dev/wallets/dist/declarations/src/lib/wagmi-connectors/WagmiConnector";
 
