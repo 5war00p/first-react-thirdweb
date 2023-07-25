@@ -322,6 +322,8 @@ export class TonConnectConnector extends WagmiConnector<
   }
 
   async #initProvider() {
+    // This entire logic needs to be updated with TonConnect class from @tonconnect/sdk
+
     const {
       default: EthereumProvider,
       OPTIONAL_EVENTS,
@@ -379,6 +381,8 @@ export class TonConnectConnector extends WagmiConnector<
    * Also check that dapp supports at least 1 chain from previously approved session.
    */
   async #isChainsStale() {
+    // We won't be needing the chain as we only have single chain.
+
     const namespaceMethods = this.#getNamespaceMethods();
     if (namespaceMethods.includes(ADD_CHAIN_METHOD)) {
       return false;
