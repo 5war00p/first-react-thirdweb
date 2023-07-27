@@ -14,6 +14,7 @@ import { getTONChain } from "./ton/getChain";
 import { Ethereum, Polygon } from "@thirdweb-dev/chains";
 import { NextUIProvider } from "@nextui-org/react";
 import { TonConnect } from "./ton/tonConnect";
+import tonKeeperWallet from "./ton/onlyTonKeeper/getWallet";
 // import { TonApp } from "./TonApp";
 
 // This is the chain your dApp will work on.
@@ -34,6 +35,7 @@ getTONChain().then((TONChain) => {
           safeWallet(),
           coinbaseWallet(),
           TonConnect(),
+          tonKeeperWallet(),
           walletConnect({ projectId: WALLET_CONNECT_CLOUD_PROJECT_ID }),
         ]}
         supportedChains={[Ethereum, Polygon, TONChain]}

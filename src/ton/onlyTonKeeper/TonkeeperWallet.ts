@@ -10,8 +10,12 @@ import {
   WagmiAdapter,
 } from "@thirdweb-dev/wallets";
 
-// ? Reference: https://github.com/thirdweb-dev/js/blob/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/wallets/src/evm/wallets/coinbase-wallet.ts
-
+/**
+ * ! IMPORTANT
+ * This is where wallet config is added.
+ * If you see, I've used TonConnect provider for the required functions
+ * ? Reference: https://github.com/thirdweb-dev/js/blob/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/wallets/src/evm/wallets/coinbase-wallet.ts
+ */
 export class TonKeeperWallet extends AbstractClientWallet {
   connector?: Connector;
   tonConnector?: TonKeeperWalletConnector;

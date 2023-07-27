@@ -23,6 +23,13 @@ export const getWalletList = async () => {
   return { walletList, embededWallet, remoteWallets };
 };
 
+/**
+ * ! IMPORTANT
+ * It is the connector with dummy funcions implemented.
+ * I named it as tonKeeper as I wanted to build tonKeeper first.
+ *
+ * The initialization of the TonConnect is written above, that is the provider which contains, connect/disconnect buttons.
+ */
 export class TonKeeperWalletConnector extends WagmiConnector {
   readonly id = "tonkeeper";
   readonly name = "Tonkeeper";

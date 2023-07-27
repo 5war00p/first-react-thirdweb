@@ -3,6 +3,10 @@ import { TonKeeperWallet } from "./TonkeeperWallet";
 import { ConnectUIProps } from "@thirdweb-dev/react";
 import { TonKeeperConnectUI } from "./TonKeeperConnectUI";
 
+/**
+ * !IMPORTANT
+ * Wallet function implementation
+ */
 const tonKeeperWallet = (): WalletConfig<TonKeeperWallet> => {
   return {
     id: "tonkeeper",

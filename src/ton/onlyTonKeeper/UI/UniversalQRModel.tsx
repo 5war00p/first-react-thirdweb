@@ -23,6 +23,10 @@ interface UniversalQrModalProps {
 
 /**
  *
+ * ! IMPORTANT
+ * This is the content that will be displayed inside the modal popup.
+ * Except QR code everything else is commented.
+ * Problem is scanning this QR, it not recognizing in the tonkeeper wallet mobile app.
  * ? References:
  * ? https://github.com/ton-connect/sdk/blob/adf2f8fa23542c4ec09cfbcc29d9c252bd3c0dd8/packages/ui/src/app/views/modals/wallets-modal/wallets-modal.tsx
  * ? https://github.com/ton-connect/sdk/blob/adf2f8fa23542c4ec09cfbcc29d9c252bd3c0dd8/packages/ui/src/app/views/modals/wallets-modal/universal-qr-modal/index.tsx
@@ -85,7 +89,7 @@ export const UniversalQrModal: FC<UniversalQrModalProps> = (props) => {
     >
       <Text>Scan QR code with a TON Connect compatible wallet.</Text>
       <QRCode value={request} />
-      <Container>
+      {/* <Container>
         <Button onClick={onOpenWalletClick}>
           {availableInjectableWallets.length ? (
             <Text>Open Wallet</Text>
@@ -116,7 +120,7 @@ export const UniversalQrModal: FC<UniversalQrModalProps> = (props) => {
             </Button>
           </Link>
         )}
-      </Container>
+      </Container> */}
     </Container>
   );
 };
