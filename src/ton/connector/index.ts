@@ -7,10 +7,10 @@ import {
   ProviderRpcError,
 } from "@thirdweb-dev/wallets";
 import type { Chain } from "@thirdweb-dev/chains";
-import type WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { providers, utils } from "ethers";
 import { walletIds } from "../walletIds";
 import { QRModalOptions } from "./qrModalOptions";
+import type TonConnectProvider from "../TonConnectProvider";
 
 const chainsToRequest = new Set([88705]);
 
@@ -83,7 +83,7 @@ const LAST_USED_CHAIN_ID = "last-used-chain-id";
  */
 
 export class TonConnectConnector extends WagmiConnector<
-  WalletConnectProvider,
+  TonConnectProvider,
   WalletConnectOptions,
   WalletConnectSigner
 > {
@@ -91,7 +91,7 @@ export class TonConnectConnector extends WagmiConnector<
   readonly name = "TonConnect";
   readonly ready = true;
 
-  #provider?: WalletConnectProvider;
+  #provider?: TonConnectProvider;
   #initProviderPromise?: Promise<void>;
   #storage: AsyncStorage;
   filteredChains: Chain[];
@@ -324,22 +324,20 @@ export class TonConnectConnector extends WagmiConnector<
   async #initProvider() {
     // This entire logic needs to be updated with TonConnect class from @tonconnect/sdk
 
-    const {
-      default: EthereumProvider,
-      OPTIONAL_EVENTS,
-      OPTIONAL_METHODS,
-    } = await import("@walletconnect/ethereum-provider");
+    const { default: TonConnectProvider } = await import(
+      "../TonConnectProvider"
+    );
     const [defaultChain, ...optionalChains] = this.filteredChains.map(
       ({ chainId }) => chainId
     );
 
     if (defaultChain) {
-      // EthereumProvider populates & deduplicates required methods and events internally
-      this.#provider = await EthereumProvider.init({
+      // EthereumProvider (TonConnectProvider) populates & deduplicates required methods and events internally
+      this.#provider = await TonConnectProvider.init({
         showQrModal: this.options.qrcode !== false,
         projectId: this.options.projectId,
-        optionalMethods: OPTIONAL_METHODS,
-        optionalEvents: OPTIONAL_EVENTS,
+        optionalMethods: [],
+        optionalEvents: [],
         chains: [defaultChain],
         optionalChains: optionalChains,
 

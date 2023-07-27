@@ -6,9 +6,9 @@ import {
   Connector,
   WagmiAdapter,
 } from "@thirdweb-dev/wallets";
-import type WalletConnectProvider from "@walletconnect/ethereum-provider";
 import { walletIds } from "./walletIds";
 import { WagmiConnectorData } from "@thirdweb-dev/wallets/dist/declarations/src/lib/wagmi-core";
+import TonConnectProvider from "./TonConnectProvider";
 
 export type TON_WC_QRModalOptions = QRModalOptions;
 
@@ -46,7 +46,7 @@ export type TonWalletConnectOptions = {
 
 export class TonWalletConnect extends AbstractClientWallet<TonWalletConnectOptions> {
   #tonConnectConnector?: TonConnectConnector;
-  #provider?: WalletConnectProvider;
+  #provider?: TonConnectProvider;
 
   connector?: Connector;
 
@@ -94,7 +94,7 @@ export class TonWalletConnect extends AbstractClientWallet<TonWalletConnectOptio
     }
   };
 
-  #onConnect = (data: WagmiConnectorData<WalletConnectProvider>) => {
+  #onConnect = (data: WagmiConnectorData<TonConnectProvider>) => {
     this.#provider = data.provider;
     if (!this.#provider) {
       throw new Error("WalletConnect provider not found after connecting.");
@@ -157,15 +157,15 @@ export class TonWalletConnect extends AbstractClientWallet<TonWalletConnectOptio
 
   async connectWithQrCode(options: ConnectWithQrCodeArgs) {
     await this.getConnector();
-    const wcConnector = this.#tonConnectConnector;
+    const tcConnector = this.#tonConnectConnector;
 
-    if (!wcConnector) {
+    if (!tcConnector) {
       throw new Error("WalletConnect connector not found");
     }
 
-    const wcProvider = await wcConnector.getProvider();
+    const tcProvider = await tcConnector.getProvider();
 
-    wcProvider.on("display_uri", (uri) => {
+    tcProvider.on("display_uri", (uri) => {
       options.onQrCodeUri(uri);
     });
 
