@@ -87,8 +87,23 @@ export const UniversalQrModal: FC<UniversalQrModalProps> = (props) => {
       onClick={() => setPopupOpened(false)}
       data-tc-universal-qr-desktop="true"
     >
-      <Text>Scan QR code with a TON Connect compatible wallet.</Text>
-      <QRCode value={request} />
+      <Container
+        css={{
+          backgroundColor: "White",
+          maxWidth: "fit-content",
+          padding: "2rem",
+          borderRadius: "2rem",
+        }}
+      >
+        <QRCode value={request} color="white" />
+      </Container>
+      <Text
+        weight="semibold"
+        css={{ textAlign: "center", padding: "0.5rem" }}
+        color="#ffffff"
+      >
+        Scan QR code with a TON Connect compatible wallet
+      </Text>
       {/* <Container>
         <Button onClick={onOpenWalletClick}>
           {availableInjectableWallets.length ? (

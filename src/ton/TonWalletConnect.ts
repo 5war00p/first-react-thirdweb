@@ -8,7 +8,7 @@ import {
 } from "@thirdweb-dev/wallets";
 import { walletIds } from "./walletIds";
 import { WagmiConnectorData } from "@thirdweb-dev/wallets/dist/declarations/src/lib/wagmi-core";
-import TonConnectProvider from "./TonConnectProvider";
+import type TonConnectProvider from "./TonConnectProvider";
 
 export type TON_WC_QRModalOptions = QRModalOptions;
 
