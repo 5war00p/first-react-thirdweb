@@ -41,45 +41,45 @@ export const UniversalQrModal: FC<UniversalQrModalProps> = (props) => {
       bridgeUrl: item.bridgeUrl,
       universalLink: item.universalLink,
     }));
-  const availableInjectableWallets = props.walletsList.filter(
-    isWalletInfoCurrentlyInjected
-  );
+  // const availableInjectableWallets = props.walletsList.filter(
+  //   isWalletInfoCurrentlyInjected
+  // );
 
   const request = useMemo(() => connector.connect(walletsBridges), []);
 
-  const onOpenWalletClick = (): void => {
-    let blurred = false;
-    function blurHandler(): void {
-      blurred = true;
-      window.removeEventListener("blur", blurHandler);
-    }
+  // const onOpenWalletClick = (): void => {
+  //   let blurred = false;
+  //   function blurHandler(): void {
+  //     blurred = true;
+  //     window.removeEventListener("blur", blurHandler);
+  //   }
 
-    window.addEventListener("blur", blurHandler);
+  //   window.addEventListener("blur", blurHandler);
 
-    openLink(addReturnStrategy(request, "none"));
-    setTimeout(() => {
-      window.removeEventListener("blur", blurHandler);
-    }, 200);
-  };
+  //   openLink(addReturnStrategy(request, "none"));
+  //   setTimeout(() => {
+  //     window.removeEventListener("blur", blurHandler);
+  //   }, 200);
+  // };
 
-  const onOpenExtensionClick = (e: PressEvent): void => {
-    if (availableInjectableWallets.length === 1) {
-      const walletInfo = availableInjectableWallets[0]!;
+  // const onOpenExtensionClick = (e: PressEvent): void => {
+  //   if (availableInjectableWallets.length === 1) {
+  //     const walletInfo = availableInjectableWallets[0]!;
 
-      connector.connect({
-        jsBridgeKey: walletInfo.jsBridgeKey,
-      });
-      return;
-    }
+  //     connector.connect({
+  //       jsBridgeKey: walletInfo.jsBridgeKey,
+  //     });
+  //     return;
+  //   }
 
-    setPopupOpened((opened) => !opened);
-  };
+  //   setPopupOpened((opened) => !opened);
+  // };
 
-  const onExtensionClick = (walletInfo: WalletInfoCurrentlyInjected): void => {
-    connector.connect({
-      jsBridgeKey: walletInfo.jsBridgeKey,
-    });
-  };
+  // const onExtensionClick = (walletInfo: WalletInfoCurrentlyInjected): void => {
+  //   connector.connect({
+  //     jsBridgeKey: walletInfo.jsBridgeKey,
+  //   });
+  // };
 
   return (
     <Container

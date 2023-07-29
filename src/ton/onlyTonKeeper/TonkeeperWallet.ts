@@ -8,6 +8,7 @@ import {
   AbstractClientWallet,
   Connector,
   WagmiAdapter,
+  WalletOptions,
 } from "@thirdweb-dev/wallets";
 import { getTONChain } from "../getChain";
 
@@ -27,8 +28,9 @@ export class TonKeeperWallet extends AbstractClientWallet {
     return "Tonkeeper" as const;
   }
 
-  constructor() {
-    super(TonKeeperWallet.id);
+  constructor(options?: WalletOptions<TonKeeperWallet>) {
+    console.log(">>> wallet", TonKeeperWallet.id);
+    super(TonKeeperWallet.id, options);
   }
 
   static meta = {
@@ -46,9 +48,11 @@ export class TonKeeperWallet extends AbstractClientWallet {
   };
 
   protected async getConnector(): Promise<Connector> {
+    console.log(">>> this.connector", this.connector);
     if (!this.connector) {
       const tonChain = await getTONChain();
       const tonConnector = new TonKeeperWalletConnector({ chains: [tonChain] });
+      console.log(">>> tonConnector", tonConnector);
       this.tonConnector = tonConnector;
       this.connector = new WagmiAdapter(tonConnector);
     }

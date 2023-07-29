@@ -1,4 +1,4 @@
-import type { WalletOptions, WalletConfig } from "@thirdweb-dev/react-core";
+import type { WalletConfig } from "@thirdweb-dev/react-core";
 import { TonKeeperWallet } from "./TonkeeperWallet";
 import { ConnectUIProps } from "@thirdweb-dev/react";
 import { TonKeeperConnectUI } from "./TonKeeperConnectUI";
@@ -23,12 +23,15 @@ const tonKeeperWallet = (): WalletConfig<TonKeeperWallet> => {
           "https://addons.mozilla.org/en-US/firefox/addon/tonkeeper/?utm_source=tonkeeper_index",
       },
     },
-    create: (options: WalletOptions): TonKeeperWallet => {
+    create(): TonKeeperWallet {
       return new TonKeeperWallet();
     },
-    connectUI: (props: ConnectUIProps<TonKeeperWallet>) =>
-      TonKeeperConnectUI(props),
-    isInstalled: () => false,
+    connectUI(props: ConnectUIProps<TonKeeperWallet>) {
+      return TonKeeperConnectUI(props);
+    },
+    isInstalled(): boolean {
+      return false;
+    },
   };
 };
 
