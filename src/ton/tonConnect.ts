@@ -15,10 +15,11 @@ export const TonConnect = (
   return {
     id: TonWalletConnect.id,
     meta: TonWalletConnect.meta,
-    create(options: WalletOptions) {
+    create: (options: WalletOptions) => {
+      console.log(">>> create 2");
       return new TonWalletConnect({
         ...options,
-        qrcode: true,
+        qrcode: false,
         qrModalOptions: config?.qrModalOptions,
       });
     },

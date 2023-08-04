@@ -35,13 +35,24 @@ export class TonKeeperWalletConnector extends WagmiConnector {
   readonly name = "Tonkeeper";
   readonly ready = true;
 
-  provider?: "http" | "injected";
+  provider?: TonConnect;
 
   constructor({ chains }: { chains?: Chain[] }) {
     super({ chains, options: {} });
   }
 
   async connect(): Promise<Required<WagmiConnectorData<any>>> {
+    const provider = await this.getProvider();
+    if (!provider) {
+      throw new Error("Connector not found");
+    }
+    this.setupListeners();
+
+    // emit "connecting" event
+    this.emit("message", {
+      type: "connecting",
+    });
+
     return Promise.resolve({
       account: connector.account?.address as string,
       chain: {
@@ -67,6 +78,10 @@ export class TonKeeperWalletConnector extends WagmiConnector {
   async getChainId() {
     const chainId = (await getTONChain()).chainId;
     return chainId;
+  }
+
+  async switchAccount() {
+    // Todo
   }
 
   isUserRejectedRequestError(error: unknown) {
@@ -96,4 +111,14 @@ export class TonKeeperWalletConnector extends WagmiConnector {
   setupListeners(): Promise<void> {
     throw new Error("Method not implemented.");
   }
+
+  // async setupListeners(): Promise<void> {
+  //   const provider = await this.getProvider();
+
+  //   if (provider.walletEventsListener) {
+  //     provider.walletEventsListener("accountsChanged", this.onAccountsChanged);
+  //     provider.walletEventsListener("chainChanged", this.onChainChanged);
+  //     provider.walletEventsListener("disconnect", this.onDisconnect);
+  //   }
+  // }
 }

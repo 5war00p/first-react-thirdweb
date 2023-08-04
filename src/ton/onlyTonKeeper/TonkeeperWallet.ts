@@ -1,9 +1,5 @@
 import { WalletInfoRemote } from "@tonconnect/sdk";
-import {
-  TonKeeperWalletConnector,
-  connector,
-  getWalletList,
-} from "./connector";
+import { connector, getWalletList } from "./connector";
 import {
   AbstractClientWallet,
   Connector,
@@ -11,6 +7,34 @@ import {
   WalletOptions,
 } from "@thirdweb-dev/wallets";
 import { getTONChain } from "../getChain";
+import { TonConnectConnector } from "../connector";
+import { QRModalOptions } from "../connector/qrModalOptions";
+
+type ConnectWithQrCodeArgs = {
+  chainId?: number;
+  onQrCodeUri: (uri: string) => void;
+  onConnected: (accountAddress: string) => void;
+};
+
+export type TonConnectWalletCOptions = {
+  /**
+   * Whether to open the default Wallet Connect QR code Modal for connecting to Zerion Wallet on mobile if Zerion is not injected when calling connect().
+   */
+  qrcode?: boolean;
+  /**
+   * When connecting MetaMask using the QR Code - Wallet Connect connector is used which requires a project id.
+   * This project id is Your project’s unique identifier for wallet connect that can be obtained at cloud.walletconnect.com.
+   *
+   * https://docs.walletconnect.com/2.0/web3modal/options#projectid-required
+   */
+  projectId?: string;
+  /**
+   * options to customize the Wallet Connect QR Code Modal ( only relevant when qrcode is true )
+   *
+   * https://docs.walletconnect.com/2.0/web3modal/options
+   */
+  qrModalOptions?: QRModalOptions;
+};
 
 /**
  * ! IMPORTANT
@@ -18,18 +42,19 @@ import { getTONChain } from "../getChain";
  * If you see, I've used TonConnect provider for the required functions
  * ? Reference: https://github.com/thirdweb-dev/js/blob/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/wallets/src/evm/wallets/coinbase-wallet.ts
  */
-export class TonKeeperWallet extends AbstractClientWallet {
+export class TonKeeperWallet extends AbstractClientWallet<TonConnectWalletCOptions> {
   connector?: Connector;
-  tonConnector?: TonKeeperWalletConnector;
+  tonConnectConnector?: TonConnectConnector;
 
-  static id = "tonkeeper";
+  static id = "tonConnect";
 
   public get walletName() {
-    return "Tonkeeper" as const;
+    return "TonConnect" as const;
   }
 
-  constructor(options?: WalletOptions<TonKeeperWallet>) {
-    console.log(">>> wallet", TonKeeperWallet.id);
+  isInjected = false;
+
+  constructor(options?: WalletOptions<TonConnectWalletCOptions>) {
     super(TonKeeperWallet.id, options);
   }
 
@@ -47,14 +72,23 @@ export class TonKeeperWallet extends AbstractClientWallet {
     },
   };
 
-  protected async getConnector(): Promise<Connector> {
-    console.log(">>> this.connector", this.connector);
+  async getConnector(): Promise<Connector> {
     if (!this.connector) {
       const tonChain = await getTONChain();
-      const tonConnector = new TonKeeperWalletConnector({ chains: [tonChain] });
-      console.log(">>> tonConnector", tonConnector);
-      this.tonConnector = tonConnector;
-      this.connector = new WagmiAdapter(tonConnector);
+      const tonConnectConnector = new TonConnectConnector({
+        chains: [tonChain],
+        options: {
+          projectId: this.options?.projectId ?? "",
+          dappMetadata: this.dappMetadata,
+          storage: this.walletStorage,
+          qrcode: this.options?.qrcode,
+          qrModalOptions: this.options?.qrModalOptions,
+        },
+      });
+
+      // need to save this for getting the QR code URI
+      this.tonConnectConnector = tonConnectConnector;
+      this.connector = new WagmiAdapter(tonConnectConnector);
     }
 
     return this.connector;
@@ -75,7 +109,26 @@ export class TonKeeperWallet extends AbstractClientWallet {
     return universalLink;
   }
 
-  getCachedSigner(): void {
-    // Implement the getCachedSigner method
+  async connectWithQrCode(options: ConnectWithQrCodeArgs) {
+    await this.getConnector();
+    const tcConnector = this.tonConnectConnector;
+    if (!tcConnector) {
+      throw new Error("WalletConnect connector not found");
+    }
+    const tcProvider = await tcConnector.getProvider();
+
+    // set a listener for display_uri event
+    tcProvider.on("display_uri", (uri) => {
+      options.onQrCodeUri(uri);
+    });
+
+    // trigger connect flow
+    this.connect({
+      chainId: options.chainId,
+    }).then(options.onConnected);
+  }
+
+  async switchAccount() {
+    throw new Error("Cannot switch account");
   }
 }

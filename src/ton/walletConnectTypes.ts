@@ -1,5 +1,5 @@
 import { SignClientTypes } from "@walletconnect/types";
-import { TonConnectProvider } from "./TonConnectProvider";
+import TonConnectProvider from "./TonConnectProvider";
 export interface ProviderRpcError extends Error {
   message: string;
   code: number;
@@ -46,7 +46,7 @@ export declare namespace IProviderEvents {
     display_uri: string;
   }
 }
-export interface IEthereumProviderEvents {
+export interface ITonConnectProviderEvents {
   on: <E extends IProviderEvents.Event>(
     event: E,
     listener: (args: IProviderEvents.EventArguments[E]) => void
@@ -91,7 +91,7 @@ export interface EIP1193Provider {
   ): TonConnectProvider;
   request(args: RequestArguments): Promise<unknown>;
 }
-export interface IEthereumProvider extends EIP1193Provider {
+export interface ITonConnectProvider extends EIP1193Provider {
   enable(): Promise<ProviderAccounts>;
 }
 //# sourceMappingURL=types.d.ts.map
