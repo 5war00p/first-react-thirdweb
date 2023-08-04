@@ -1,7 +1,7 @@
 {
-  "url": "https://ton-connect.github.io/demo-dapp/",
+  "url": "https://first-react-thirdweb.vercel.app/",
   "name": "Test TON App",
-  "iconUrl": "https://ton-connect.github.io/demo-dapp/apple-touch-icon.png",
-  "termsOfUseUrl": "https://ton-connect.github.io/demo-dapp/terms-of-use.txt",
-  "privacyPolicyUrl": "https://ton-connect.github.io/demo-dapp/privacy-policy.txt"
+  "iconUrl": "https://first-react-thirdweb.vercel.app/logo192.png",
+  "termsOfUseUrl": "https://first-react-thirdweb.vercel.app/terms-of-use.txt",
+  "privacyPolicyUrl": "https://first-react-thirdweb.vercel.app/privacy-policy.txt"
 }

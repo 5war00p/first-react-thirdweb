@@ -1,5 +1,7 @@
 import type { WalletConfig, WalletOptions } from "@thirdweb-dev/react-core";
 import { TonWalletConnect, TonWalletConnectOptions } from "./TonWalletConnect";
+import { ConnectUIProps } from "@thirdweb-dev/react";
+import { TonConnectUI } from "./onlyTonKeeper/TonConnectUI";
 
 /**
  * ! IMPORTANT
@@ -22,6 +24,9 @@ export const TonConnect = (
         qrcode: false,
         qrModalOptions: config?.qrModalOptions,
       });
+    },
+    isInstalled: () => {
+      return false;
     },
   };
 };

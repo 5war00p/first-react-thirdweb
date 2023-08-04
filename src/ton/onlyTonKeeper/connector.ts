@@ -11,7 +11,10 @@ import { WagmiConnectorData } from "@thirdweb-dev/wallets/dist/declarations/src/
 const EXAMPLE_MANIFEST_URL =
   "https://gist.githubusercontent.com/siandreev/75f1a2ccf2f3b4e2771f6089aeb06d7f/raw/d4986344010ec7a2d1cc8a2a9baa57de37aaccb8/gistfile1.txt";
 
-export const connector = new TonConnect({ manifestUrl: EXAMPLE_MANIFEST_URL });
+export const connector = new TonConnect({
+  manifestUrl:
+    "https://first-react-thirdweb.vercel.app/tonconnect-manifest.json",
+});
 
 export const getWalletList = async () => {
   const walletList = await connector.getWallets();

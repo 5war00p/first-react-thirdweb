@@ -1,7 +1,7 @@
 import type { WalletConfig, WalletOptions } from "@thirdweb-dev/react-core";
 import { TonKeeperWallet } from "./TonkeeperWallet";
 import { ConnectUIProps } from "@thirdweb-dev/react";
-import { TonKeeperConnectUI } from "./TonKeeperConnectUI";
+import { TonConnectUI } from "./TonConnectUI";
 
 /**
  * !IMPORTANT
@@ -30,7 +30,7 @@ const tonKeeperWallet = (
       return new TonKeeperWallet({ ...options, qrcode: true });
     },
     connectUI: (props: ConnectUIProps<TonKeeperWallet>) => {
-      return TonKeeperConnectUI(props);
+      return TonConnectUI(props);
     },
     isInstalled: () => {
       return false;
