@@ -26,7 +26,7 @@ const activeChain = "ethereum";
 const container = document.getElementById("root");
 const root = createRoot(container!);
 const WALLET_CONNECT_CLOUD_PROJECT_ID = "cdfcb005f3195fab742c44c40e7ea6bc";
-getTONChain().then((TONChain) => {
+getTONChain().then((TonChain) => {
   root.render(
     <React.StrictMode>
       <ThirdwebProvider
@@ -35,12 +35,12 @@ getTONChain().then((TONChain) => {
           metamaskWallet(),
           safeWallet(),
           coinbaseWallet(),
-          coinbaseWallet2(),
-          TonConnect(),
+          // coinbaseWallet2(),
+          // TonConnect(),
           tonKeeperWallet(),
           walletConnect({ projectId: WALLET_CONNECT_CLOUD_PROJECT_ID }),
         ]}
-        supportedChains={[Ethereum, Polygon, TONChain]}
+        supportedChains={[Ethereum, Polygon, TonChain]}
       >
         <NextUIProvider>
           <App />

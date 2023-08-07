@@ -1,8 +1,8 @@
 import type { ConnectUIProps } from "@thirdweb-dev/react-core";
-import { TonKeeperWallet } from "./TonkeeperWallet";
+import { TonKeeperWallet } from "../TonkeeperWallet";
 // import { Navbar } from "@ne  xtui-org/react";
-import { UniversalQrModal } from "./UI/UniversalQRModel";
-import { getWalletList } from "./connector";
+import { UniversalQrModal } from "./UniversalQRModel";
+import { getWalletList } from "../connector";
 import { useEffect, useState } from "react";
 import { WalletInfo } from "@tonconnect/sdk";
 

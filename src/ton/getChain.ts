@@ -8,7 +8,6 @@ const getRPC = async (): Promise<string> => {
 
 const TONChain = {
   name: "The Open Network",
-  title: "The Open Network",
   chain: "TON", // https://ton.org/brand-assets
   icon: {
     url: "https://assets.coingecko.com/coins/images/17980/small/ton_symbol.png?1670498136",
@@ -21,6 +20,7 @@ const TONChain = {
     // ! we should be able to use this url to initalize a ton sdk/provider afterwards
     "",
   ],
+  faucets: [],
   nativeCurrency: {
     name: "TonCoin", // https://ton.org/brand-assets
     symbol: "TON",
@@ -34,7 +34,13 @@ const TONChain = {
     {
       name: "tonscan",
       url: "https://tonscan.org/",
-      standard: "EIP3091",
+      /**
+       * ? References:
+       * 1. https://docs.ton.org/develop/howto/subresolvers
+       * 2. https://github.com/ton-blockchain/TEPs/blob/master/text/0081-dns-standard.md
+       * 3. https://eips.ethereum.org/EIPS/eip-137
+       */
+      standard: "TEP0081",
     },
   ],
   testnet: false,
@@ -44,11 +50,10 @@ const TONChain = {
 export const getTONChain = () => {
   return getRPC()
     .then((rpcEndpoint) => {
-      TONChain["rpc"].filter(Boolean).push(rpcEndpoint);
-      return TONChain as Chain;
+      const TonChainWithRPC = { ...TONChain, rpc: [rpcEndpoint] };
+      return TonChainWithRPC as Chain;
     })
     .catch((err) => {
-      console.log(err);
       return TONChain as Chain;
     });
 };

@@ -106,6 +106,7 @@ export class TonKeeperWallet extends AbstractClientWallet<TonConnectWalletCOptio
 
     const universalLink = connector.connect(tonkeeperConnectionSource);
 
+    console.log(">>> came to QrUrl", universalLink);
     return universalLink;
   }
 
@@ -121,6 +122,8 @@ export class TonKeeperWallet extends AbstractClientWallet<TonConnectWalletCOptio
     tcProvider.on("display_uri", (uri) => {
       options.onQrCodeUri(uri);
     });
+
+    console.log(">>> connectWithQrCode", tcProvider, options);
 
     // trigger connect flow
     this.connect({

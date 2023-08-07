@@ -1,38 +1,38 @@
-import type { WalletConfig, WalletOptions } from "@thirdweb-dev/react-core";
+import type { WalletConfig } from "@thirdweb-dev/react-core";
 import { TonKeeperWallet } from "./TonkeeperWallet";
-import { ConnectUIProps } from "@thirdweb-dev/react";
 import { TonConnectUI } from "./TonConnectUI";
+import { TonWalletConnect } from "../TonWalletConnect";
 
 /**
- * !IMPORTANT
+ * ! INFO
  * Wallet function implementation
  */
-const tonKeeperWallet = (
-  config?: WalletOptions
-): WalletConfig<TonKeeperWallet> => {
+const tonKeeperWallet = (): WalletConfig<TonKeeperWallet> => {
+  const universalLink = new TonKeeperWallet().getQrUrl();
+
+  universalLink
+    .then((ul) => {
+      console.log(ul);
+    })
+    .catch(console.log);
   return {
-    id: "tonkeeper",
-    meta: {
-      name: "TonKeeper",
-      iconURL: "https://tonkeeper.com/assets/logo.svg",
-      urls: {
-        chrome:
-          "https://chrome.google.com/webstore/detail/tonkeeper/omaabbefbmiijedngplfjmnooppbclkk/?utm_source=tonkeeper_indexhttps://chrome.google.com/webstore/detail/tonkeeper/omaabbefbmiijedngplfjmnooppbclkk/?utm_source=tonkeeper_index",
-        android:
-          "https://play.google.com/store/apps/details?id=com.ton_keeper&pli=1",
-        ios: "https://apps.apple.com/us/app/tonkeeper/id1587742107",
-        firefox:
-          "https://addons.mozilla.org/en-US/firefox/addon/tonkeeper/?utm_source=tonkeeper_index",
-      },
-    },
-    create: (options: WalletOptions) => {
+    id: TonKeeperWallet.id,
+    meta: TonKeeperWallet.meta,
+    create: (walletOptions) => {
       console.log(">>> create 1");
-      return new TonKeeperWallet({ ...options, qrcode: true });
+      return new TonKeeperWallet({
+        ...walletOptions,
+        qrcode: true,
+        projectId: "cdfcb005f3195fab742c44c40e7ea6bc",
+      });
     },
-    connectUI: (props: ConnectUIProps<TonKeeperWallet>) => {
-      return TonConnectUI(props);
-    },
+    connectUI: TonConnectUI,
     isInstalled: () => {
+      /**
+       * ! INFO
+       * Hardcoding it as a false
+       * Coz, the first versiono of TON is just a QR code Scan
+       */
       return false;
     },
   };

@@ -340,7 +340,7 @@ export class TonConnectConnector extends WagmiConnector<
         optionalEvents: [],
         chains: [defaultChain],
         optionalChains: optionalChains,
-
+        relayUrl: "wss://relay.walletconnect.com",
         metadata: {
           name: this.options.dappMetadata.name,
           description: this.options.dappMetadata.description || "",

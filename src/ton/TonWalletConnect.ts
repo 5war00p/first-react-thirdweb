@@ -25,7 +25,7 @@ export type TonWalletConnectOptions = {
    * Defaults to `true`.
    */
   qrcode?: boolean;
-
+  projectId?: string;
   /**
    * options to customize the QR Code Modal
    *
@@ -74,7 +74,7 @@ export class TonWalletConnect extends AbstractClientWallet<TonWalletConnectOptio
       this.#tonConnectConnector = new TonConnectConnector({
         chains: this.chains,
         options: {
-          projectId: "", // keeping it as empty as we dont need it
+          projectId: this.options?.projectId ?? "",
           qrcode: this.qrcode,
           dappMetadata: this.dappMetadata,
           storage: this.walletStorage,
