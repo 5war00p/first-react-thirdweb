@@ -650,7 +650,7 @@ export class EthereumProvider implements IEthereumProvider {
     const providedRpc = this.rpc.rpcMap?.[chainId];
     return (
       providedRpc ||
-      `${RPC_URL}?chainId=eip155:${chainId}&projectId=${
+      `${RPC_URL}?chainId=tep0081:${chainId}&projectId=${
         projectId || this.rpc.projectId
       }`
     );
@@ -674,7 +674,7 @@ export class EthereumProvider implements IEthereumProvider {
   }
 
   protected reset() {
-    this.chainId = 1;
+    this.chainId = 88705;
     this.accounts = [];
   }
 

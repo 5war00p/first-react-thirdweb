@@ -9,6 +9,8 @@ import {
 import { walletIds } from "./walletIds";
 import { WagmiConnectorData } from "@thirdweb-dev/wallets/dist/declarations/src/lib/wagmi-core";
 import type TonConnectProvider from "./TonConnectProvider";
+import { connector, getWalletList } from "./onlyTonKeeper/connector";
+import { WalletInfoRemote } from "@tonconnect/sdk";
 
 export type TON_WC_QRModalOptions = QRModalOptions;
 
@@ -153,6 +155,22 @@ export class TonWalletConnect extends AbstractClientWallet<TonWalletConnectOptio
       "session_request_sent",
       this.#onSessionRequestSent
     );
+  }
+
+  async getQrUrl() {
+    const walletsList = await getWalletList();
+
+    const tonConnectionSource = {
+      universalLink: (walletsList?.walletList[0] as WalletInfoRemote)
+        .universalLink as string,
+      bridgeUrl: (walletsList?.walletList[0] as WalletInfoRemote)
+        .bridgeUrl as string,
+    };
+
+    const universalLink = connector.connect(tonConnectionSource);
+
+    console.log(">>> came to QrUrl", universalLink);
+    return universalLink;
   }
 
   async connectWithQrCode(options: ConnectWithQrCodeArgs) {

@@ -59,17 +59,8 @@ export class TonKeeperWallet extends AbstractClientWallet<TonConnectWalletCOptio
   }
 
   static meta = {
-    name: "TonKeeper",
-    iconURL: "https://tonkeeper.com/assets/logo.svg",
-    urls: {
-      chrome:
-        "https://chrome.google.com/webstore/detail/tonkeeper/omaabbefbmiijedngplfjmnooppbclkk/?utm_source=tonkeeper_indexhttps://chrome.google.com/webstore/detail/tonkeeper/omaabbefbmiijedngplfjmnooppbclkk/?utm_source=tonkeeper_index",
-      android:
-        "https://play.google.com/store/apps/details?id=com.ton_keeper&pli=1",
-      ios: "https://apps.apple.com/us/app/tonkeeper/id1587742107",
-      firefox:
-        "https://addons.mozilla.org/en-US/firefox/addon/tonkeeper/?utm_source=tonkeeper_index",
-    },
+    name: "TonConnect",
+    iconURL: "https://avatars.githubusercontent.com/u/55018343?s=48&v=4",
   };
 
   async getConnector(): Promise<Connector> {
@@ -91,6 +82,7 @@ export class TonKeeperWallet extends AbstractClientWallet<TonConnectWalletCOptio
       this.connector = new WagmiAdapter(tonConnectConnector);
     }
 
+    console.log(">>> connector", this.connector);
     return this.connector;
   }
 

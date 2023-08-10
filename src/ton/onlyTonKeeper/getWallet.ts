@@ -8,13 +8,6 @@ import { TonWalletConnect } from "../TonWalletConnect";
  * Wallet function implementation
  */
 const tonKeeperWallet = (): WalletConfig<TonKeeperWallet> => {
-  const universalLink = new TonKeeperWallet().getQrUrl();
-
-  universalLink
-    .then((ul) => {
-      console.log(ul);
-    })
-    .catch(console.log);
   return {
     id: TonKeeperWallet.id,
     meta: TonKeeperWallet.meta,

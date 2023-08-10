@@ -5,6 +5,7 @@ import {
 } from "@thirdweb-dev/react-core";
 import { useEffect, useRef, useState } from "react";
 import { TonKeeperWallet } from "./TonkeeperWallet";
+import { TonWalletConnect } from "../TonWalletConnect";
 import QRCode from "react-qr-code";
 import { Container, Text } from "@nextui-org/react";
 
