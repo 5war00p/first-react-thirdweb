@@ -7,7 +7,6 @@ export const TonConnect = (): WalletConfig<TonWallet> => {
     id: TonWallet.id,
     meta: TonWallet.meta,
     create: (options: WalletOptions) => {
-      console.log(">>> in create");
       return new TonWallet({
         ...options,
       });

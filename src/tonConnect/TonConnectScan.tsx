@@ -26,6 +26,7 @@ export const TonConnectScan: React.FC<{
     typeof TonWallet
   >;
 
+  console.log(">>> chainToConnect", chainToConnect);
   useEffect(() => {
     if (scanStarted.current) {
       return;
@@ -69,6 +70,7 @@ export const TonConnectScan: React.FC<{
     } else {
       setConnectionStatus("disconnected");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tonWallet]);
 
   return (

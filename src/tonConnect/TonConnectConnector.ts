@@ -1,6 +1,7 @@
 import { TonConnect } from "@tonconnect/sdk";
 import { getTONChain } from "../ton/getChain";
 import { Connector } from "@thirdweb-dev/wallets";
+import { connector } from "./connector";
 
 export class TonConnectConnector extends Connector {
   readonly id = "tonConnect";
@@ -11,10 +12,7 @@ export class TonConnectConnector extends Connector {
 
   constructor() {
     super();
-    this.provider = new TonConnect({
-      manifestUrl:
-        "https://first-react-thirdweb.vercel.app/tonconnect-manifest.json",
-    });
+    this.provider = connector;
   }
 
   async connect(options?: { chainId: number }) {
@@ -46,7 +44,9 @@ export class TonConnectConnector extends Connector {
   }
 
   async disconnect() {
-    this.provider.disconnect();
+    if (this.provider) {
+      this.provider.disconnect();
+    }
   }
 
   async getChainId() {

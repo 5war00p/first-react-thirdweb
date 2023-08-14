@@ -3,8 +3,8 @@ import {
   Connector,
   WalletOptions,
 } from "@thirdweb-dev/wallets";
-import { WalletInfoRemote } from "@tonconnect/sdk";
 import { TonConnectConnector } from "./TonConnectConnector";
+import { getUniversalLink } from "./connector";
 
 export type TonWalletOptions = WalletOptions<{}>;
 
@@ -27,35 +27,24 @@ export class TonWallet extends AbstractClientWallet {
     });
   }
 
+  async autoConnect(
+    connectOptions?: { chainId?: number | undefined } | undefined
+  ): Promise<string> {
+    // ! TODO: Need more investigation about implementation of this function and returning empty string
+    this.connect(connectOptions);
+    return "";
+  }
+
   async getConnector(): Promise<Connector> {
-    console.log(">>> came to connector");
     if (!this.connector) {
       this.connector = new TonConnectConnector();
     }
-    console.log(">>> connector", this.connector);
     return this.connector;
   }
 
   async getQrUrl() {
-    console.log(">>> came out of getQrUrl");
-    if (this.connector) {
-      const walletList = (await this.connector?.provider.getWallets()) ?? [];
-
-      console.log(">>> walletList", walletList);
-      const tonkeeperConnectionSource = {
-        universalLink: (walletList?.[0] as WalletInfoRemote)
-          ?.universalLink as string,
-        bridgeUrl: (walletList?.[0] as WalletInfoRemote)?.bridgeUrl as string,
-      };
-
-      console.log(">>> tonkeeperConnectionSource", tonkeeperConnectionSource);
-
-      const universalLink = this.connector?.provider.connect(
-        tonkeeperConnectionSource
-      );
-
-      console.log(">>> came to QrUrl", universalLink);
-      return universalLink;
-    }
+    const qrUrl = await getUniversalLink();
+    if (!qrUrl) throw new Error("QR url is undefined");
+    return qrUrl;
   }
 }
