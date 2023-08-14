@@ -23,6 +23,8 @@ export const getWalletList = async () => {
     .filter(isWalletInfoInjected)
     .find((wallet) => wallet.embedded);
 
+  console.log(">>> walletList", walletList);
+
   return { walletList, embededWallet, remoteWallets };
 };
 
