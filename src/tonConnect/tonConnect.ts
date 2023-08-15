@@ -2,6 +2,7 @@ import type { WalletConfig, WalletOptions } from "@thirdweb-dev/react-core";
 import { TonWallet } from "./TonWallet";
 import { TonConnectUI } from "./TonConnectUI";
 
+// ? Reference: https://github.com/thirdweb-dev/js/tree/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/react/src/wallet/wallets
 export const TonConnect = (): WalletConfig<TonWallet> => {
   return {
     id: TonWallet.id,

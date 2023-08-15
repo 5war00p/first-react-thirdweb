@@ -6,6 +6,8 @@ import {
 import { TonConnectConnector } from "./TonConnectConnector";
 import { getUniversalLink } from "./connector";
 
+// ? Reference: https://github.com/thirdweb-dev/js/tree/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/wallets/src/evm/wallets
+
 export type TonWalletOptions = WalletOptions<{}>;
 
 export class TonWallet extends AbstractClientWallet {
