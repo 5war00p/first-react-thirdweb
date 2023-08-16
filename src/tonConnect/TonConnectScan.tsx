@@ -8,6 +8,7 @@ import QRCode from "react-qr-code";
 import { Container, Loading, Text } from "@nextui-org/react";
 import { TonWallet } from "./TonWallet";
 import { Wallet } from "@tonconnect/sdk";
+import Ton from "./chain";
 
 export const TonConnectScan: React.FC<{
   onConnected: () => void;
@@ -26,7 +27,6 @@ export const TonConnectScan: React.FC<{
     typeof TonWallet
   >;
 
-  console.log(">>> chainToConnect", chainToConnect);
   useEffect(() => {
     if (scanStarted.current) {
       return;
@@ -43,11 +43,13 @@ export const TonConnectScan: React.FC<{
       })
       .then((uri) => {
         setQrCodeUri(uri);
-
         walletInstance.connector?.provider.onStatusChange(
           setTonWallet,
           console.error
         );
+      })
+      .then(() => {
+        return walletInstance.connect({ chainId: Ton.chainId })
       })
       .catch((err) => {
         setConnectionStatus("disconnected");
@@ -76,7 +78,6 @@ export const TonConnectScan: React.FC<{
   return (
     // ! ScanScreen part
     // ? Refrence: https://github.com/thirdweb-dev/js/blob/dac8fa7d98b6952acf8d13e173099889c1d47da8/packages/react/src/wallet/ConnectWallet/screens/ScanScreen.tsx
-
     <Container
       display="flex"
       alignContent="center"

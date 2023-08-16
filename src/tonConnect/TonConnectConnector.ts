@@ -1,7 +1,7 @@
 import { TonConnect } from "@tonconnect/sdk";
-import { getTONChain } from "../ton/getChain";
 import { Connector } from "@thirdweb-dev/wallets";
 import { connector } from "./connector";
+import Ton from "./chain";
 
 export class TonConnectConnector extends Connector {
   readonly id = "tonConnect";
@@ -50,7 +50,7 @@ export class TonConnectConnector extends Connector {
   }
 
   async getChainId() {
-    const chainId = (await getTONChain()).chainId;
+    const chainId = Ton.chainId;
     return chainId;
   }
 
