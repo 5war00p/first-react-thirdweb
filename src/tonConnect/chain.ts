@@ -20,8 +20,8 @@ export default {
     },
     infoURL: "https://ton.org/",
     shortName: "ton",
-    chainId: 88705, // custom
-    networkId: 88705, // custom
+    chainId: -239,
+    networkId: -239,
     explorers: [
       {
         name: "tonscan",

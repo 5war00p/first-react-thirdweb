@@ -49,7 +49,7 @@ export const TonConnectScan: React.FC<{
         );
       })
       .then(() => {
-        return walletInstance.connect({ chainId: Ton.chainId })
+        return walletInstance.connect()
       })
       .catch((err) => {
         setConnectionStatus("disconnected");
